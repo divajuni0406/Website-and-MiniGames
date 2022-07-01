@@ -1,6 +1,5 @@
 body {
   font-family: "Roboto", sans-serif;
-  background-color: #fff;
 }
 
 #background {
@@ -18,6 +17,20 @@ body {
   background-color: white;
   border-radius: 15px;
   border: 2px solid black;
+}
+
+.backButton {
+  width: 90%;
+}
+
+.bi-arrow-left-circle-fill {
+  width: 50%;
+  color: #724C21;
+}
+
+.bi-arrow-left-circle-fill:hover {
+  width: 60%;
+  color: blanchedalmond;
 }
 
 p {
@@ -41,7 +54,7 @@ a:hover {
 }
 
 .content {
-  padding: 7rem 0;
+  padding: 7rem;
 }
 
 h2 {
@@ -50,13 +63,9 @@ h2 {
 
 .half, .half .container>.row {
   height: 100vh;
-  min-height: 700px;
 }
-
-@media (max-width: 991.98px) {
-  .half .bg {
-    height: 200px;
-  }
+.container-fluid {
+  height: 100vh;
 }
 
 .half .contents {
@@ -65,12 +74,6 @@ h2 {
 
 .half .contents, .half .bg {
   width: 50%;
-}
-
-@media (max-width: 1199.98px) {
-  .half .contents, .half .bg {
-    width: 100%;
-  }
 }
 
 .half .contents .form-control, .half .bg .form-control {
@@ -197,4 +200,22 @@ h2 {
 .control--checkbox input:disabled:checked~.control__indicator {
   background-color: #7e0cf5;
   opacity: .2;
+}
+
+@media (max-width: 991.98px) {
+  .half .bg {
+    height: 200px;
+  }
+}
+
+@media (max-width: 580px) {
+  #btn {
+    display: none;
+  }
+}
+
+@media (max-width: 1199.98px) {
+  .half .contents, .half .bg {
+    width: 100%;
+  }
 }
