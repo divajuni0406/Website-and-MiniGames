@@ -35,7 +35,7 @@ function pick(playerOption) {
   action.buttonDisabled();
   action.resetButtonDisabled();
   let playerOptionElement = document.getElementById(playerOption + "-p");
-  playerOptionElement.classList.add("activeUser");
+  playerOptionElement.classList.add("activePlayer");
   let textElement = document.getElementById("textVS");
   textElement.innerHTML = "Loading...";
   textElement.classList.add("active-text-win");

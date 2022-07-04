@@ -19,10 +19,19 @@ const loadPage = () => {
 loadPage();
 
 logout.addEventListener("click", () => {
-  if (confirm("Are You Serius to Logout ?")) {
-    eraseCookie("username");
-    window.location.href = "/login";
-  }
+  Swal.fire({
+    title: "Are you sure to logout?",
+    icon: "warning",
+    showCancelButton: true,
+    confirmButtonColor: "#3085d6",
+    cancelButtonColor: "#d33",
+    confirmButtonText: "Yes, logout!",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      eraseCookie("username");
+      window.location.href = "/login";
+    }
+  });
 });
 
 const playGame = () => {

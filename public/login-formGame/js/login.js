@@ -18,14 +18,32 @@ loginBtn.addEventListener("click", (e) => {
     .then((response) => {
       return response.json();
     })
-    .then((result) => {
-      alert(result.message);
+    .then(async (result) => {
       if (result.statusCode === 200) {
+        await Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: `welcome ${result.resultData.username}`,
+          showConfirmButton: false,
+          timer: 2000,
+        });
+
         setCookie("username", JSON.stringify(result.resultData.username), 1);
         return (window.location.href = "/");
+      } else {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: result.message,
+        });
       }
     })
     .catch((error) => {
       console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Samething Wrong in Server, Please Call IT",
+      });
     });
 });
