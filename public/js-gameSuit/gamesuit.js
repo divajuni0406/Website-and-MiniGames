@@ -27,7 +27,15 @@ const randomManipulation = () => {
     i++;
   }, 100);
 };
-
+let comWinner = 1;
+let comLose = 1;
+let playerWinner = 1;
+let playerLose = 1;
+let draw = 1;
+let comTextLose = document.querySelector("#com-text-lose");
+let comTextWin = document.querySelector("#com-text-win");
+let playerTextLose = document.querySelector("#player-text-lose");
+let playerTextWin = document.querySelector("#player-text-win");
 // Human Option and Main Function
 function pick(playerOption) {
   gameStart.playerOption(playerOption);
@@ -49,6 +57,17 @@ function pick(playerOption) {
     let textElement = document.getElementById("textVS");
     textElement.innerHTML = finalResult;
     textElement.classList.add("active-text-win1");
+    if (finalResult === "DRAW") return (document.querySelector("#draw-result").innerHTML = draw++);
+    if (finalResult === gameStart.comWin) {
+      comTextWin.innerHTML = comWinner++;
+    } else {
+      comTextLose.innerHTML = comLose++;
+    }
+    if (finalResult === gameStart.playerWin) {
+      playerTextWin.innerHTML = playerWinner++;
+    } else {
+      playerTextLose.innerHTML = playerLose++;
+    }
   }, 3000);
 }
 

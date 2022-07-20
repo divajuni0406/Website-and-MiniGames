@@ -5,14 +5,14 @@ loginBtn.addEventListener("click", (e) => {
   let username = document.getElementById("username").value;
   let password = document.getElementById("password").value;
 
-  fetch("/register", {
+  fetch("/login", {
     method: "POST",
     headers: {
       "Content-type": "application/json",
     },
     body: JSON.stringify({
-      username,
-      password,
+      username: username,
+      password: password,
     }),
   })
     .then((response) => {
@@ -23,12 +23,12 @@ loginBtn.addEventListener("click", (e) => {
         await Swal.fire({
           position: "top-center",
           icon: "success",
-          title: `welcome ${result.resultData.username}`,
+          title: `welcome ${result.sendData.username}`,
           showConfirmButton: false,
           timer: 2000,
         });
 
-        setCookie("username", JSON.stringify(result.resultData.username), 1);
+        setCookie("username", JSON.stringify(result.sendData.username), 1);
         return (window.location.href = "/");
       } else {
         Swal.fire({
@@ -37,13 +37,13 @@ loginBtn.addEventListener("click", (e) => {
           text: result.message,
         });
       }
-    })
-    .catch((error) => {
-      console.log(error);
-      Swal.fire({
-        icon: "error",
-        title: "Oops...",
-        text: "Samething Wrong in Server, Please Call IT",
-      });
     });
+  // .catch((error) => {
+  //   console.log(error);
+  //   Swal.fire({
+  //     icon: "error",
+  //     title: "Oops...",
+  //     text: "Samething Wrong in Server, Please Call IT",
+  //   });
+  // });
 });

@@ -33,6 +33,13 @@ body {
   color: blanchedalmond;
 }
 
+a:link{
+  text-decoration: none!important;
+}
+
+.your-account:hover{
+  color: blue; 
+}
 p {
   color: #b3b3b3;
   font-weight: 500;
@@ -81,7 +88,7 @@ h2 {
   -webkit-box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.1);
   border-radius: 4px;
-  height: 54px;
+  height: 80px;
   background: #fff;
 }
 
@@ -107,7 +114,7 @@ h2 {
   padding-right: 30px;
 }
 
-.half .forgot-pass {
+.half .your-account {
   position: relative;
   top: 2px;
   font-size: 14px;
