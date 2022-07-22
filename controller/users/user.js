@@ -18,53 +18,55 @@ const signUpGet = (req, res) => {
   res.render("signup");
 };
 
-const loginPost = (req, res) => {
+const loginPost = async (req, res) => {
   const { username, password } = req.body;
-  users.findOne({ where: { username, password: md5(password) } }).then((response) => {
-    if (!response) {
-      res.status(400).send({ message: "Failed to login. Invalid Username or Password" });
-    } else {
-      res.send({
-        message: `Welcome`,
-        sendData: response,
-        statusCode: 200,
-      });
+  let findUser = await users.findOne({ where: { username, password: md5(password) } });
+  if (!findUser) {
+    res.status(400).send({ message: "Failed to login. Invalid Username or Password", statusCode: 400 });
+  } else {
+    try {
+      let getProfile = await profile.findOne({ where: { user_id: findUser.id } });
+      if (findUser.password === md5(password)) {
+        res.send({
+          message: `Welcome ${findUser.username}`,
+          sendData: { User_account: findUser, User_rofile: getProfile },
+          statusCode: 200,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).send(error.message);
     }
-  });
+  }
 };
 
 // to create database user
 const register = async (req, res) => {
-  let requestData = req.body;
-  let dataUser = {
-    username: requestData.username,
-    password: md5(requestData.password),
-    email: requestData.email,
-  };
+  let { username, password, email } = req.body;
   try {
-    let userCreate = await users.create(dataUser);
-    console.log(userCreate);
-    // create data profile database with (foreign-key)
-    let dataProfile = {
-      user_id: userCreate.dataValues.id,
-      first_name: requestData.first_name,
-      last_name: requestData.last_name,
-      full_name: requestData.full_name,
-      umur: requestData.age,
-      tanggal_lahir: requestData.date_of_birth,
-      gender: requestData.gender,
-      address: requestData.address,
-    };
-    let createProfile = await profile.create(dataProfile);
-    console.log(createProfile);
-    res.send({
-        message: `Successfull to Create Your Data`,
-        resultData: createProfile,
+    let findUser = await users.findOne({ where: { username, email } });
+    if (username && email) {
+      res.status(400).send({
+        message: `Sorry the email or username has been taken, please create the other one !`,
+        statusCode: 400,
+      });
+    } else {
+      const userCreate = await users.create({ username, password: md5(password), email });
+      console.log(userCreate);
+      // create data profile database with (foreign-key)
+      let { first_name, last_name, full_name, umur, tanggal_lahir, gender, address } = req.body;
+      let user_id = userCreate.dataValues.id;
+      const createProfile = await profile.create({ user_id, first_name, last_name, full_name, umur, tanggal_lahir, gender, address });
+      console.log(createProfile);
+      res.send({
+        message: `Successfull to register your account`,
+        resultData: { userCreate, createProfile },
         statusCode: 200,
       });
+    }
     // create data profile database with (foreign-key) end tags.
   } catch (error) {
-    console.log(error);
+    res.status(500).send(error.message);
   }
 
   // let userCreate = users
@@ -141,17 +143,6 @@ const registerEx = (req, res) => {
     .catch((err) => console.log(err));
 };
 
-// to find database user
-const blaGet = (req, res) => {
-  users.findAll().then((err, res) => {
-    if (err) {
-      return console.log(err);
-    }
-    console.log(res);
-  });
-  res.send("get");
-};
-
 // example to get data login to back-end
 const loginEx = (req, res) => {
   const { username, password } = req.body;
@@ -168,14 +159,13 @@ const loginEx = (req, res) => {
   });
 };
 
-const blaDelete = (req, res) => {
-  UserModel.deleteOne({ username: "kera" }).then((err, res) => {
-    if (err) {
-      console.log(err);
-    }
-    console.log(res);
-  });
-  res.send("delete");
+const blaDelete = async (req, res) => {
+  const { username } = req.body;
+  const delUser = await UserModel.deleteOne({ username });
+  if (err) {
+    console.log(err);
+  }
+  console.log(res);
 };
 
 const blaPut = (req, res) => {
@@ -246,7 +236,6 @@ exports.loginPost = loginPost;
 exports.home = home;
 exports.signUpGet = signUpGet;
 exports.registerEx = registerEx;
-exports.blaGet = blaGet;
 exports.blaDelete = blaDelete;
 exports.blaPut = blaPut;
 exports.loginEx = loginEx;
