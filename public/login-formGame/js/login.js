@@ -23,12 +23,12 @@ loginBtn.addEventListener("click", (e) => {
         await Swal.fire({
           position: "top-center",
           icon: "success",
-          title: `welcome ${result.sendData.username}`,
+          title: result.message,
           showConfirmButton: false,
           timer: 2000,
         });
 
-        setCookie("username", JSON.stringify(result.sendData.username), 1);
+        setCookie("username", JSON.stringify(result.sendData.user_account.username), 1);
         return (window.location.href = "/");
       } else {
         Swal.fire({

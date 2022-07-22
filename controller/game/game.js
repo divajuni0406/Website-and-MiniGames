@@ -1,5 +1,3 @@
-const gameGet =  (req, res) => {
+exports.gameGet =  (req, res) => {
     res.render("gamesuit");
   }
-
-exports.gameGet = gameGet;
