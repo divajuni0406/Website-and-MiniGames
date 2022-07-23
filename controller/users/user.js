@@ -1,7 +1,9 @@
 const db = require("../../models");
 db.sequelize.sync();
-
-const md5 = require("md5");
+const Cryptr = require("cryptr");
+const SecretKey = "secretKey";
+const passConverter = new Cryptr(SecretKey);
+const JWT = require("jsonwebtoken");
 const { users, profile } = require("../../models");
 
 exports.loginGet = (req, res) => {
@@ -18,18 +20,34 @@ exports.signUpGet = (req, res) => {
 
 exports.loginPost = async (req, res) => {
   const { username, password } = req.body;
-  let findUser = await users.findOne({ where: { username, password: md5(password) } });
+  let findUser = await users.findOne({ where: { username } });
   if (!findUser) {
     res.status(400).send({ message: "Failed to login. Invalid Username or Password", statusCode: 400 });
   } else {
     try {
       let getProfile = await profile.findOne({ where: { user_id: findUser.id } });
-      if (findUser.password === md5(password)) {
+      if (passConverter.decrypt(findUser.password) === password) {
+        let createToken = JWT.sign(
+          {
+            username: findUser.username,
+            email: findUser.email,
+            access: ["dashboard", "create_data", "read_data", "update_data", "delete_data"],
+          },
+          SecretKey
+        );
         res.send({
           message: `Welcome ${findUser.username}`,
-          sendData: { user_account: findUser, user_rofile: getProfile },
+          sendData: {
+            id: findUser.id,
+            username: findUser.username,
+            email: findUser.email,
+            token: createToken,
+            user_rofile: getProfile,
+          },
           statusCode: 200,
         });
+      } else {
+        res.status(400).send({ message: "Failed to login. Invalid Username or Password", statusCode: 400 });
       }
     } catch (error) {
       console.log(error);
@@ -50,7 +68,7 @@ exports.register = async (req, res) => {
         statusCode: 400,
       });
     } else {
-      const userCreate = await users.create({ username, password: md5(password), email });
+      const userCreate = await users.create({ username, password: passConverter.encrypt(password), email });
       console.log(userCreate);
       // create data profile database with (foreign-key)
       let { first_name, last_name, full_name, umur, tanggal_lahir, gender, address } = req.body;
@@ -67,4 +85,4 @@ exports.register = async (req, res) => {
   } catch (error) {
     res.status(500).send(error.message);
   }
-}
+};

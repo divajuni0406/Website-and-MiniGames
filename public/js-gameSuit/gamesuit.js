@@ -63,6 +63,7 @@ function pick(playerOption) {
     } else {
       comTextLose.innerHTML = comLose++;
     }
+    comTextLose.innerHTML = finalResult === gameStart.comWin ? comWinner++ : comLose++;
     if (finalResult === gameStart.playerWin) {
       playerTextWin.innerHTML = playerWinner++;
     } else {

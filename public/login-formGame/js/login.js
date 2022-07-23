@@ -28,7 +28,7 @@ loginBtn.addEventListener("click", (e) => {
           timer: 2000,
         });
 
-        setCookie("username", JSON.stringify(result.sendData.user_account.username), 1);
+        setCookie("username", JSON.stringify(result.username), 1);
         return (window.location.href = "/");
       } else {
         Swal.fire({
@@ -37,13 +37,13 @@ loginBtn.addEventListener("click", (e) => {
           text: result.message,
         });
       }
+    })
+    .catch((error) => {
+      console.log(error);
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Samething Wrong !!!",
+      });
     });
-  // .catch((error) => {
-  //   console.log(error);
-  //   Swal.fire({
-  //     icon: "error",
-  //     title: "Oops...",
-  //     text: "Samething Wrong in Server, Please Call IT",
-  //   });
-  // });
 });
