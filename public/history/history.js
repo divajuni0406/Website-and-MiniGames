@@ -6,6 +6,16 @@ $(document).ready(function () {
 
 getHistory();
 
+let selectOption = document.querySelector('.form-select');
+let section = document.querySelector('#last-section');
+selectOption.addEventListener('change', () => {
+  if(selectOption.value === "25"|| selectOption.value === "50" || selectOption.value === "100"){
+    section.classList.add("bg-history");
+  } else {
+    section.classList.remove("bg-history");
+  }
+})
+
 async function getHistory() {
   let userId = getCookie("userId");
   let username = getCookie("username");

@@ -8,7 +8,7 @@ const action = new Action();
 const gameStart = new GameStart();
 
 let userId = getCookie("userId");
-let type_player = 'computer';
+let type_player = "computer";
 let comTextLose = document.querySelector("#com-text-lose");
 let comTextWin = document.querySelector("#com-text-win");
 let playerTextLose = document.querySelector("#player-text-lose");
@@ -57,9 +57,9 @@ function pick(playerOption, callback) {
 
   setTimeout(function () {
     let payload = {
-      win : 0, 
-      lose : 0, 
-      draw : 0
+      win: 0,
+      lose: 0,
+      draw: 0,
     };
     action.removeClassActive();
     action.resetButtonDisabled1();
@@ -71,18 +71,18 @@ function pick(playerOption, callback) {
     let textElement = document.getElementById("textVS");
     textElement.innerHTML = finalResult;
     textElement.classList.add("active-text-win1");
-    
-    switch(finalResult) {
-      case 'DRAW' : 
-        draw++
+
+    switch (finalResult) {
+      case "DRAW":
+        draw++;
         payload.draw++;
         break;
-      case 'PLAYER1 WIN' : 
+      case "PLAYER1 WIN":
         playerWinner++;
         payload.win++;
         comLose++;
         break;
-      case 'COM WIN' : 
+      case "COM WIN":
         comWinner++;
         payload.lose++;
         playerLose++;
@@ -96,21 +96,25 @@ function pick(playerOption, callback) {
 // Add Onclick of PlayerChoice
 const playerOption = document.querySelectorAll(".playerChoice button");
 playerOption.forEach((value) => {
-
   document.querySelector("." + value.classList[2]).onclick = () => {
-    pick(value.classList[2], async function(payload){
+    pick(value.classList[2], async function (payload) {
       playerTextWin.innerHTML = playerWinner;
       playerTextLose.innerHTML = playerLose;
       comTextWin.innerHTML = comWinner;
       comTextLose.innerHTML = comLose;
       drawText.innerHTML = draw;
+      playerTextWin.style.color = "white";
+      playerTextLose.style.color = "white";
+      comTextWin.style.color = "white";
+      comTextLose.style.color = "white";
+      drawText.style.color = "white";
 
       await saveScore(payload);
     });
   };
 });
 
-async function saveScore(payload){
+async function saveScore(payload) {
   try {
     await fetch("/save", {
       method: "POST",
@@ -118,15 +122,15 @@ async function saveScore(payload){
         "Content-type": "application/json",
       },
       body: JSON.stringify({
-        userId, 
-        win : payload.win, 
-        lose : payload.lose, 
-        draw : payload.draw, 
-        type_player
+        userId,
+        win: payload.win,
+        lose: payload.lose,
+        draw: payload.draw,
+        type_player,
       }),
     });
   } catch (error) {
-    
+    console.log(error);
   }
 }
 

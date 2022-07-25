@@ -1,4 +1,4 @@
-#bg-history {
+.bg-history {
     background-image: linear-gradient(rgba(0, 0, 0, 0.4),
             rgba(0, 0, 0, 0.4)), url('/assets_website_landing_page/top-score-bg.png');
     height: 100vh;
