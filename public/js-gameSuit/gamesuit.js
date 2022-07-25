@@ -1,10 +1,25 @@
 // Import files
 import { GameStart } from "./GameStart.js";
 import { Action } from "./Action.js";
+import { getCookie, eraseCookie } from "../../cookies.js";
 
 // Call function
 const action = new Action();
 const gameStart = new GameStart();
+
+let userId = getCookie("userId");
+let type_player = "computer";
+let comTextLose = document.querySelector("#com-text-lose");
+let comTextWin = document.querySelector("#com-text-win");
+let playerTextLose = document.querySelector("#player-text-lose");
+let playerTextWin = document.querySelector("#player-text-win");
+let drawText = document.querySelector("#draw-result");
+
+let comWinner = 0;
+let comLose = 0;
+let playerWinner = 0;
+let playerLose = 0;
+let draw = 0;
 
 // Random Pick Manipulation Computer
 const randomManipulation = () => {
@@ -29,7 +44,7 @@ const randomManipulation = () => {
 };
 
 // Human Option and Main Function
-function pick(playerOption) {
+function pick(playerOption, callback) {
   gameStart.playerOption(playerOption);
   randomManipulation();
   action.buttonDisabled();
@@ -39,16 +54,42 @@ function pick(playerOption) {
   let textElement = document.getElementById("textVS");
   textElement.innerHTML = "Loading...";
   textElement.classList.add("active-text-win");
+
   setTimeout(function () {
+    let payload = {
+      win: 0,
+      lose: 0,
+      draw: 0,
+    };
     action.removeClassActive();
     action.resetButtonDisabled1();
     const comOption = gameStart.comOption();
     let comOptionsElement = document.getElementById(comOption);
-    comOptionsElement.classList.add("active");
     const finalResult = gameStart.winner(playerOption, comOption);
+    comOptionsElement.classList.add("active");
+
     let textElement = document.getElementById("textVS");
     textElement.innerHTML = finalResult;
     textElement.classList.add("active-text-win1");
+
+    switch (finalResult) {
+      case "DRAW":
+        draw++;
+        payload.draw++;
+        break;
+      case "PLAYER1 WIN":
+        playerWinner++;
+        payload.win++;
+        comLose++;
+        break;
+      case "COM WIN":
+        comWinner++;
+        payload.lose++;
+        playerLose++;
+        break;
+    }
+
+    callback(payload);
   }, 3000);
 }
 
@@ -56,9 +97,42 @@ function pick(playerOption) {
 const playerOption = document.querySelectorAll(".playerChoice button");
 playerOption.forEach((value) => {
   document.querySelector("." + value.classList[2]).onclick = () => {
-    pick(value.classList[2]);
+    pick(value.classList[2], async function (payload) {
+      playerTextWin.innerHTML = playerWinner;
+      playerTextLose.innerHTML = playerLose;
+      comTextWin.innerHTML = comWinner;
+      comTextLose.innerHTML = comLose;
+      drawText.innerHTML = draw;
+      playerTextWin.style.color = "white";
+      playerTextLose.style.color = "white";
+      comTextWin.style.color = "white";
+      comTextLose.style.color = "white";
+      drawText.style.color = "white";
+
+      await saveScore(payload);
+    });
   };
 });
+
+async function saveScore(payload) {
+  try {
+    await fetch("/save", {
+      method: "POST",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({
+        userId,
+        win: payload.win,
+        lose: payload.lose,
+        draw: payload.draw,
+        type_player,
+      }),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
 
 // Reset Button Function
 const resetButton = document.querySelector(".reset-button");

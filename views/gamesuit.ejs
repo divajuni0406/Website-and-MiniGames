@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Game Suit</title>
     <!-- my icon link -->
-    <link rel="icon" href="assets_suit_game/logo1.png" type="image/png">
+    <link rel="icon" href="/assets_suit_game/logo1.png" type="image/png">
     <!-- my font link  -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -50,16 +50,24 @@
     <section>
         <div class="container gameArea">
             <!-- Player Area -->
-            <div class="playerArea">
-                <h1>Player 1</h1>
-                <div class="playerChoice player">
-                    <button id="rock-p" class="btn mb-5 rock">
+            <div class="playerArea ">
+                <h1 class="">Player 1</h1>
+                <div class="general-score-area">
+                    <div class="score-area win">
+                        <h3 class="score-text" id="player-text-win">WIN</h3>
+                    </div>
+                    <div class="score-area lose">
+                        <h3 class="score-text" id="player-text-lose">LOSE</h3>
+                    </div>
+                </div>
+                <div class="playerChoice player ">
+                    <button id="rock-p" class="btn mb-5 rock ">
                         <img src="assets_suit_game/batu.png" alt="rock">
                     </button>
-                    <button id="paper-p" class="btn mb-5 paper">
+                    <button id="paper-p" class="btn mb-5 paper ">
                         <img src="assets_suit_game/kertas.png" alt="paper">
                     </button>
-                    <button id="scissors-p" class="btn mb-5 scissors">
+                    <button id="scissors-p" class="btn mb-5 scissors ">
                         <img src="assets_suit_game/gunting.png" alt="scissors">
                     </button>
                 </div>
@@ -67,22 +75,35 @@
             <!-- Player Area End Tag-->
             <!-- Versus Box -->
             <div class="versusBox">
+                <div class="draw-score-area">
+                    <div class="draw-score">
+                        <h3 class="score-text" id="draw-result">DRAW</h3>
+                    </div>
+                </div>
                 <div class="versus">
                     <h1 id="textVS">VS</h1>
                 </div>
                 <div class="refresh">
-                    <button class="btn reset-button"><img src="assets_suit_game/refresh.png"
+                    <button class="btn reset-button "><img src="assets_suit_game/refresh.png"
                             alt="Refresh Button"></button>
                 </div>
             </div>
             <!-- Versus Box End Tag-->
             <!-- Computer Area -->
-            <div class="computerArea">
-                <h1>Computer</h1>
+            <div class="computerArea ">
+                <h1 class="">Computer</h1>
+                <div class="general-score-area">
+                    <div class="score-area win">
+                        <h3 class="score-text" id="com-text-win">WIN</h3>
+                    </div>
+                    <div class="score-area lose">
+                        <h3 class="score-text" id="com-text-lose">LOSE</h3>
+                    </div>
+                </div>
                 <div class="comBrain">
-                    <button class="btn" id="rock"><img src="assets_suit_game/batu.png" alt="rock"></button>
-                    <button class="btn" id="paper"><img src="assets_suit_game/kertas.png" alt="paper"></button>
-                    <button class="btn" id="scissors"><img src="assets_suit_game/gunting.png" alt="scissors"></button>
+                    <button class="btn " id="rock"><img src="assets_suit_game/batu.png" alt="rock"></button>
+                    <button class="btn " id="paper"><img src="assets_suit_game/kertas.png" alt="paper"></button>
+                    <button class="btn " id="scissors"><img src="assets_suit_game/gunting.png" alt="scissors"></button>
                 </div>
             </div>
         </div>

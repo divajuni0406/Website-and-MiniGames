@@ -1,6 +1,5 @@
+require("dotenv").config();
 const express = require("express");
-// call express ejs layouts
-// const expressLayouts = require("express-ejs-layouts");
 // call morgan
 const morgan = require("morgan");
 const app = express();
@@ -13,6 +12,7 @@ app.use(express.static("public"));
 
 // this is to call the function of json in express so that can accept file type of json from thunder plugin or front end
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // import function Routes from routes.js
 const Routes = require("./routes/routes");

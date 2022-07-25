@@ -85,6 +85,62 @@ body {
     text-align: center;
 }
 
+.score-area {
+    height: 10%;
+    width: 25%;
+    display: flex;
+    border: solid 2px white;
+    margin-left: 2%;
+    border-radius: 20px;
+    justify-content: center;
+}
+
+.win {
+    background-color: green;
+}
+
+.lose {
+    background-color: red;
+}
+
+.draw-score {
+    height: 100%;
+    width: 35%;
+    display: flex;
+    border: solid 2px white;
+    background-color: gray;
+    margin-left: 2%;
+    border-radius: 20px;
+    justify-content: center;
+}
+
+.general-score-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 3%;
+    margin-top: 5%;
+}
+
+.draw-score-area {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 21%;
+    margin-bottom: 36%;
+}
+
+/* .win{
+    background-color: green;
+}
+.lose{
+    background-color: red;
+    height: 110%;
+} */
+.score-text {
+    color: rgba(255, 255, 255, 0.432);
+}
+
 .playerChoice {
     display: flex;
     flex-direction: column;
@@ -92,16 +148,19 @@ body {
 }
 
 .playerChoice img {
-    width: 40%;
+    width: 38%;
 }
 
 .playerChoice button {
-    margin-top: 0%;
     margin-left: 20%;
     margin-right: 20%;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 3%;
+    padding-bottom: 3%;
     border-radius: 20px;
+}
+
+.playerChoice #paper-p, #scissors-p {
+    margin-top: -3%;
 }
 
 .playerChoice button:hover {
@@ -134,11 +193,11 @@ body {
 
 .comBrain button {
     margin-top: 0%;
-    margin-bottom: 12%;
+    margin-bottom: 9%;
     margin-left: 20%;
     margin-right: 20%;
-    padding-top: 5%;
-    padding-bottom: 5%;
+    padding-top: 3%;
+    padding-bottom: 3%;
     border-radius: 20px;
 }
 
@@ -151,14 +210,13 @@ body {
 }
 
 .comBrain img {
-    width: 40%;
+    width: 38%;
 }
 
 .versusBox {
     width: 600%;
     display: flex;
     flex-direction: column;
-    justify-content: center;
 }
 
 .versus h1 {
