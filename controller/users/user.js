@@ -1,5 +1,5 @@
 const db = require("../../models");
-db.sequelize.sync();
+// db.sequelize.sync();
 const Cryptr = require("cryptr");
 const SecretKey = "secretKey";
 const passConverter = new Cryptr(SecretKey);
@@ -25,7 +25,7 @@ exports.loginPost = async (req, res) => {
     res.status(400).send({ message: "Failed to login. Invalid Username or Password", statusCode: 400 });
   } else {
     try {
-      let getProfile = await profile.findOne({ where: { user_id: findUser.id } });
+      let getProfile = await profile.findOne({ where: { userId: findUser.id } });
       if (passConverter.decrypt(findUser.password) === password) {
         let createToken = JWT.sign(
           {
@@ -71,9 +71,9 @@ exports.register = async (req, res) => {
       const userCreate = await users.create({ username, password: passConverter.encrypt(password), email });
       console.log(userCreate);
       // create data profile database with (foreign-key)
-      let { first_name, last_name, full_name, umur, tanggal_lahir, gender, address } = req.body;
-      let user_id = userCreate.dataValues.id;
-      const createProfile = await profile.create({ user_id, first_name, last_name, full_name, umur, tanggal_lahir, gender, address });
+      let { first_name, last_name, full_name, age, date_of_birth, gender, address } = req.body;
+      let userId = userCreate.dataValues.id;
+      const createProfile = await profile.create({ userId, first_name, last_name, full_name, age, date_of_birth, gender, address });
       console.log(createProfile);
       res.send({
         message: `Successfull to register your account`,

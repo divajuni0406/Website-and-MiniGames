@@ -52,7 +52,7 @@ npx sequelize-cli model:generate --name game_history --attributes user_id:intege
       console.log(resProf);
     });
 
-    npx sequelize-cli model:generate --name total_score --attributes user_id:integer,win:string,draw:string,lose:string,type_player:string
+npx sequelize-cli model:generate --name game_total_score --attributes user_id:integer,win:integer,draw:integer,lose:integer,type_player:string,date_time:date
 
     membuat database: npx sequelize-cli db:migrate
 

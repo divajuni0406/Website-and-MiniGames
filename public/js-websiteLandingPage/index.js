@@ -29,6 +29,7 @@ logout.addEventListener("click", () => {
   }).then((result) => {
     if (result.isConfirmed) {
       eraseCookie("username");
+      eraseCookie("userId");
       window.location.href = "/login";
     }
   });
@@ -36,10 +37,13 @@ logout.addEventListener("click", () => {
 
 const playGame = () => {
   let playBtn = document.querySelector("#button-play");
+  let history = document.querySelector(".link-history");
   if (dataUser === null) {
     playBtn.setAttribute("href", "/login");
+    history.setAttribute("href", "/login");
   } else {
     playBtn.setAttribute("href", "/gamesuit");
+    history.setAttribute("href", "/history");
   }
 };
 playGame();
