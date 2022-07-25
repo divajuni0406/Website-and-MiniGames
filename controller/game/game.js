@@ -21,7 +21,7 @@ exports.getHistoryUser = async (req, res) => {
     res.send({
       message: "Successfull to update total game score !",
       statusCode: 200,
-      resultData: { response},
+      resultData: {response},
     });
 
   } catch (error) {

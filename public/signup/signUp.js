@@ -10,56 +10,6 @@ let password = document.querySelector("#password");
 let email = document.querySelector("#email");
 let address = document.querySelector("#address");
 
-// function signup() {
-//     let validation = validationForm();
-//     if (!validation) {
-//         return Swal.fire({
-//             icon: "error",
-//             title: "Oops...",
-//             text: `Please Fill The Form Completely With Right Format !!!`,
-//         });
-//     }
-//     fetch('/register', {
-//             method: "POST",
-//             headers: {
-//                 "Content-type": "application/json"
-//             },
-//             body: JSON.stringify({
-//                 first_name: first_name.value,
-//                 last_name: last_name.value,
-//                 full_name: full_name.value,
-//                 age: age.value,
-//                 date_of_birth: date_of_birth.value,
-//                 gender: gender.value,
-//                 username: username.value,
-//                 password: password.value,
-//                 email: email.value,
-//                 address: address.value
-//             })
-//         }).then(response => response.json())
-//         .then(async (result) => {
-//             if (result.statusCode === 200) {
-//                 await Swal.fire({
-//                     position: "top-center",
-//                     icon: "success",
-//                     title: `${result.message}`,
-//                     showConfirmButton: false,
-//                     timer: 2000,
-//                 });
-//                 return (window.location.href = "/login");
-//             }
-//             if (result.statusCode === 400) {
-//                 await Swal.fire({
-//                     position: "top-center",
-//                     icon: "error",
-//                     title: `${result.message}`,
-//                     showConfirmButton: false,
-//                     timer: 4000,
-//                 });
-//                 return;
-//             }
-//         }).catch(err => console.log(err));
-// }
 async function signup() {
   try {
     let validation = validationForm();
@@ -151,6 +101,7 @@ function validatePassword(pass) {
   return validationPassword;
 }
 
+// perspectif when user input the password field first then password confirm
 function conPass() {
   if (password.value === passwordConfirm.value && passwordConfirm.value !== "" && password.value !== "") {
     passValidation.classList.remove("invalid-pass");
@@ -172,6 +123,7 @@ function conPass() {
   }
 }
 
+// perspectif when user input the password confirm first then password field
 function pass() {
   if (password.value === passwordConfirm.value && passwordConfirm.value !== "" && password.value !== "") {
     passValidation.classList.remove("invalid-pass");
@@ -204,7 +156,7 @@ function date() {
     Swal.fire({
       icon: "error",
       title: "Oops...",
-      text: "Your age should be > 4",
+      text: "Your age should be more than 4",
     });
     return (myAge.value = "");
   }
